@@ -32,4 +32,9 @@ public class ProductsDAO {
         String sql = "UPDATE products SET type = ?, rating = ?, name = ?, categoryId = ? WHERE id = ?";
         jdbcTemplate.update(sql, products.getType(), products.getRating(), products.getName(), products.getCategoryId(), id);
     }
+
+    public void add(Products p) {
+        String sql = "INSERT INTO products (type, rating, name, categoryId) VALUES (?, ?, ?, ?);";
+        jdbcTemplate.update(sql, p.getType(), p.getRating(), p.getName(), p.getCategoryId());
+    }
 }
