@@ -27,4 +27,9 @@ public class ProductsDAO {
         String sql = "SELECT * FROM products WHERE id = ?";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class), id);
     }
+
+    public int add(Products p){
+        String sql = "INSERT INTO products (type, rating, name, categoryId) VALUES (?, ?, ?, ?);";
+        return jdbcTemplate.update(sql, p.getType(), p.getRating(), p.getName(), p.getCategoryId());
+    }
 }
