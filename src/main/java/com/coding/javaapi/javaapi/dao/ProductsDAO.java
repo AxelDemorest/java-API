@@ -4,13 +4,8 @@ import com.coding.javaapi.javaapi.models.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,5 +21,10 @@ public class ProductsDAO {
     public List<Products> getById(int id){
         String sql = "SELECT * FROM products WHERE id = ?";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class), id);
+    }
+
+    public void updateProduct(int id, Products products){
+        String sql = "UPDATE products SET type = ?, rating = ?, name = ?, categoryId = ? WHERE id = ?";
+        jdbcTemplate.update(sql, products.getType(), products.getRating(), products.getName(), products.getCategoryId(), id);
     }
 }
