@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class ProductsController {
 
     @Autowired
@@ -31,8 +31,9 @@ public class ProductsController {
         productsService.delete(id);
         return HttpStatus.NO_CONTENT;
     }
-
-
-
-
+    @PutMapping("/products/{id}")
+    public HttpStatus updateProduct(@PathVariable int id, @RequestBody Products products){
+        productsService.updateProduct(id, products);
+        return HttpStatus.OK;
+    }
 }

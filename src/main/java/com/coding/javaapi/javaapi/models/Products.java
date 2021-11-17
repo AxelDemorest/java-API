@@ -22,7 +22,7 @@ public class Products {
         return type;
     }
 
-    public void setType(String lastname) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -30,7 +30,7 @@ public class Products {
         return rating;
     }
 
-    public void setRating(String firstname) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
@@ -42,7 +42,7 @@ public class Products {
         this.name = name;
     }
 
-    public Date getCratedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
@@ -57,5 +57,4 @@ public class Products {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
-
 }
