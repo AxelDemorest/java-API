@@ -26,11 +26,11 @@ public class ProductsController {
     }
 
     @DeleteMapping("/products/{id}")
-    public HttpStatus  deleteById(@PathVariable int id)
-    {
-        productsService.delete(id);
+    public HttpStatus deleteById(@PathVariable int id) {
+        productsService.deleteProduct(id);
         return HttpStatus.NO_CONTENT;
     }
+
     @PutMapping("/products/{id}")
     public HttpStatus updateProduct(@PathVariable int id, @RequestBody Products products){
         productsService.updateProduct(id, products);

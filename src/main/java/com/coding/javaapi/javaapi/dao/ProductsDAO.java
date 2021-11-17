@@ -23,8 +23,8 @@ public class ProductsDAO {
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class), id);
     }
 
-    public void delete(int id){
-        String sql="DELETE FROM products WHERE id = ?";
+    public void deleteProduct(int id){
+        String sql = "DELETE FROM products WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 
