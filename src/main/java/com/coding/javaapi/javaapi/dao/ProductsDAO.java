@@ -23,8 +23,8 @@ public class ProductsDAO {
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class));
     }
 
-    public Products getById(){
-        String sql = "SELECT * FROM products WHERE id = 1";
-        return (Products) jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class));
+    public List<Products> getById(int id){
+        String sql = "SELECT * FROM products WHERE id = ?";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class), id);
     }
 }
