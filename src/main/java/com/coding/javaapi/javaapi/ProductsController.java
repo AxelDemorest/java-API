@@ -4,10 +4,13 @@ import com.coding.javaapi.javaapi.dao.ProductsDAO;
 import com.coding.javaapi.javaapi.models.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.net.URI;
 
 @RestController
 public class ProductsController {
@@ -15,9 +18,13 @@ public class ProductsController {
     @Autowired
     private ProductsDAO productsService;
 
-    @RequestMapping("/products")
-    public @ResponseBody List<Products> index(){
-        return productsService.listAll();
+    @GetMapping("/products")
+    public @ResponseBody Object index(@RequestParam(value = "asc", required=false) String asc, @RequestParam(value = "desc", required=false) String desc){
+        if(asc == null && desc == null) {
+            return HttpStatus.BAD_REQUEST;
+        } else {
+            return productsService.sortProducts(asc, desc);
+        }
     }
 
     @GetMapping("/products/{id}")
@@ -41,4 +48,11 @@ public class ProductsController {
     public @ResponseBody List<Products>  readByRate(@PathVariable int rating){
         return productsService.getByRate(rating);
     }
+
+    @PostMapping("/products")
+    public HttpStatus createProduct(@RequestBody Products products){
+        productsService.add(products);
+        return HttpStatus.CREATED;
+    }
+
 }
