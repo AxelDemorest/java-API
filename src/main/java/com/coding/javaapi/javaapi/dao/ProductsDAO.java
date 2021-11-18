@@ -35,9 +35,11 @@ public class ProductsDAO {
         jdbcTemplate.update(sql, products.getType(), products.getRating(), products.getName(), products.getCategoryId(), id);
     }
 
-    public List<Products> getByRate(int rating){
-        String sql = "SELECT FROM products WHERE rating BETWEEN ? AND ? ";
-        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class),rating);
+    public List<Products> getByRate(List<String> rating ){
+        String sql = "SELECT * FROM products WHERE rating BETWEEN ? AND ? ;";
+        System.out.println(rating.get(1));
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class), rating.get(0), rating.get(1));
+
     }
 
     public void add(Products p) {

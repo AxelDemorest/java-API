@@ -44,8 +44,8 @@ public class ProductsController {
         return HttpStatus.OK;
     }
 
-    @GetMapping("/products/{rating=?,?}")
-    public @ResponseBody List<Products>  readByRate(@PathVariable int rating){
+    @GetMapping("/product")
+    public @ResponseBody List<Products>  readByRate(@RequestParam("rating") List<String> rating){
         return productsService.getByRate(rating);
     }
 
