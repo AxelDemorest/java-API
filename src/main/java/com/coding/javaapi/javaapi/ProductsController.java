@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.net.URI;
 
@@ -17,9 +18,13 @@ public class ProductsController {
     @Autowired
     private ProductsDAO productsService;
 
-    @RequestMapping("/products")
-    public @ResponseBody List<Products> index(){
-        return productsService.listAll();
+    @GetMapping("/products")
+    public @ResponseBody Object index(@RequestParam(value = "asc", required=false) String asc, @RequestParam(value = "desc", required=false) String desc){
+        if(asc == null && desc == null) {
+            return HttpStatus.BAD_REQUEST;
+        } else {
+            return productsService.sortProducts(asc, desc);
+        }
     }
 
     @GetMapping("/products/{id}")
@@ -42,6 +47,7 @@ public class ProductsController {
     @PostMapping("/products")
     public HttpStatus createProduct(@RequestBody Products products){
         productsService.add(products);
-        return HttpStatus.OK;
+        return HttpStatus.CREATED;
     }
+
 }
