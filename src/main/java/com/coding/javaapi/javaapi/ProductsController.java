@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.rmi.ServerException;
-import java.rmi.server.ServerCloneException;
 import java.util.List;
 import java.net.URI;
 
@@ -30,21 +27,21 @@ public class ProductsController {
         return productsService.getById(id);
     }
 
-    @PostMapping("/products")
-    public ResponseEntity.BodyBuilder createProduct(@RequestBody Products products){
-        int res = productsService.add(products);
-        if (res == 1) {
-            return ResponseEntity.created(URI.create("/products"));
-        }
-        else{
-            return ResponseEntity.badRequest();
-        }
-
+    @DeleteMapping("/products/{id}")
+    public HttpStatus deleteById(@PathVariable int id) {
+        productsService.deleteProduct(id);
+        return HttpStatus.NO_CONTENT;
     }
 
     @PutMapping("/products/{id}")
     public HttpStatus updateProduct(@PathVariable int id, @RequestBody Products products){
         productsService.updateProduct(id, products);
+        return HttpStatus.OK;
+    }
+
+    @PostMapping("/products")
+    public HttpStatus createProduct(@RequestBody Products products){
+        productsService.add(products);
         return HttpStatus.OK;
     }
 }
