@@ -19,9 +19,9 @@ public class ProductsController {
     private ProductsDAO productsService;
 
     @GetMapping("/products")
-    public @ResponseBody Object index(@RequestParam(value = "asc", required=false) String asc, @RequestParam(value = "desc", required=false) String desc){
+    public @ResponseBody List<Products> index(@RequestParam(value = "asc", required=false) String asc, @RequestParam(value = "desc", required=false) String desc){
         if(asc == null && desc == null) {
-            return HttpStatus.BAD_REQUEST;
+            return productsService.listAll();
         } else {
             return productsService.sortProducts(asc, desc);
         }
@@ -42,6 +42,11 @@ public class ProductsController {
     public HttpStatus updateProduct(@PathVariable int id, @RequestBody Products products){
         productsService.updateProduct(id, products);
         return HttpStatus.OK;
+    }
+
+    @GetMapping("/product")
+    public @ResponseBody List<Products>  readByRate(@RequestParam("rating") List<String> rating){
+        return productsService.getByRate(rating);
     }
 
     @PostMapping("/products")
