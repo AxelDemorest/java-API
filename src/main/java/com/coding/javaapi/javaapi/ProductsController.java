@@ -41,4 +41,10 @@ public class ProductsController {
         }
 
     }
+
+    @PutMapping("/products/{id}")
+    public HttpStatus updateProduct(@PathVariable int id, @RequestBody Products products){
+        productsService.updateProduct(id, products);
+        return HttpStatus.OK;
+    }
 }
