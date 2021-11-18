@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class CategoryController {
 
     @Autowired
@@ -42,6 +42,6 @@ public class CategoryController {
     @PostMapping("/category")
     public HttpStatus createCategory(@RequestBody Category category){
         categoryService.add(category);
-        return HttpStatus.OK;
+        return HttpStatus.CREATED;
     }
 }
