@@ -32,4 +32,9 @@ public class ProductsDAO {
         String sql = "UPDATE products SET type = ?, rating = ?, name = ?, categoryId = ? WHERE id = ?";
         jdbcTemplate.update(sql, products.getType(), products.getRating(), products.getName(), products.getCategoryId(), id);
     }
+
+    public List<Products> getByRate(int rating){
+        String sql = "SELECT FROM products WHERE rating BETWEEN ? AND ? ";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class),rating);
+    }
 }

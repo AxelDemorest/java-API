@@ -36,4 +36,9 @@ public class ProductsController {
         productsService.updateProduct(id, products);
         return HttpStatus.OK;
     }
+
+    @GetMapping("/products/{rating=?,?}")
+    public @ResponseBody List<Products>  readByRate(@PathVariable int rating){
+        return productsService.getByRate(rating);
+    }
 }
