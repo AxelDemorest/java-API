@@ -7,46 +7,117 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class ProductsDAO {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     *
+     * @return
+     */
     public List<Products> listAll(){
         String sql = "SELECT * FROM products";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public List<Products> getById(int id){
         String sql = "SELECT * FROM products WHERE id = ?";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class), id);
     }
 
+    /**
+     *
+     * @param id
+     */
     public void deleteProduct(int id){
         String sql = "DELETE FROM products WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 
+    /**
+     *
+     * @param id
+     * @param products
+     */
     public void updateProduct(int id, Products products){
         String sql = "UPDATE products SET type = ?, rating = ?, name = ?, categoryId = ? WHERE id = ?";
         jdbcTemplate.update(sql, products.getType(), products.getRating(), products.getName(), products.getCategoryId(), id);
     }
 
+    /**
+     *
+     * @param rating
+     * @return
+     */
     public List<Products> getByRate(List<String> rating ){
         String sql = "SELECT * FROM products WHERE rating BETWEEN ? AND ? ;";
-        System.out.println(rating.get(1));
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class), rating.get(0), rating.get(1));
 
     }
 
+    /**
+     *
+     * @param p
+     */
     public void add(Products p) {
         String sql = "INSERT INTO products (type, rating, name, categoryId) VALUES (?, ?, ?, ?);";
         jdbcTemplate.update(sql, p.getType(), p.getRating(), p.getName(), p.getCategoryId());
     }
 
+    /**
+     *
+     * Non fonctionnelle
+     * @param products
+     */
+    public List<Products> filterMultipleValues(String name, String rating, String type) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM products WHERE ");
+        List<Object> myList = new ArrayList<Object>();
+
+        if(name != null) {
+            String[] nameArray = name.split(",");
+            for (String s : nameArray) {
+                sql.append("name = ? AND ");
+                myList.add(s);
+            }
+        }
+
+        if(rating != null) {
+            String[] nameArray = name.split(",");
+            for (Integer integer : nameArray) {
+                sql.append("rating = ? AND ");
+                myList.add(integer);
+            }
+        }
+
+        if(type != null) {
+            String[] nameArray = nameArray.split(",");
+            for (String s : type) {
+                sql.append("type = ? AND ");
+                myList.add(s);
+            }
+        }
+
+        return jdbcTemplate.query(sql.toString(), BeanPropertyRowMapper.newInstance(Products.class), myList);
+    }
+
+    /**
+     *
+     * @param asc
+     * @param desc
+     * @return
+     */
     public List<Products> sortProducts(String asc, String desc) {
         String sql = "";
 
