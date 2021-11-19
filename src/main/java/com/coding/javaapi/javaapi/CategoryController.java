@@ -2,11 +2,8 @@ package com.coding.javaapi.javaapi;
 
 import com.coding.javaapi.javaapi.dao.CategoryDAO;
 import com.coding.javaapi.javaapi.models.Category;
-import com.coding.javaapi.javaapi.models.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,18 +20,18 @@ public class CategoryController {
     }
 
     @GetMapping("/category/{id}")
-    public @ResponseBody List<Category> readById(@PathVariable Long id){
+    public @ResponseBody List<Category> readById(@PathVariable int id){
         return categoryService.getById(id);
     }
 
     @DeleteMapping("/category/{id}")
-    public HttpStatus deleteById(@PathVariable Long id) {
+    public HttpStatus deleteById(@PathVariable int id) {
         categoryService.deleteCategory(id);
         return HttpStatus.NO_CONTENT;
     }
 
     @PutMapping("/category/{id}")
-    public HttpStatus updateCategory(@PathVariable Long id, @RequestBody Category category){
+    public HttpStatus updateCategory(@PathVariable int id, @RequestBody Category category){
         categoryService.updateCategory(id, category);
         return HttpStatus.OK;
     }
@@ -43,5 +40,10 @@ public class CategoryController {
     public HttpStatus createCategory(@RequestBody Category category){
         categoryService.add(category);
         return HttpStatus.CREATED;
+    }
+
+    @GetMapping("/category/orders")
+    public List<Category> pagination(@RequestParam(value = "range") String range){
+        return categoryService.pagination(range);
     }
 }
