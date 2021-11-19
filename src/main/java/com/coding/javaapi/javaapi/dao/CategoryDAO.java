@@ -24,17 +24,17 @@ public class CategoryDAO {
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Category.class));
     }
 
-    public List<Category> getById(Long id){
+    public List<Category> getById(int id){
         String sql = "SELECT * FROM category WHERE id = ?";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Category.class), id);
     }
 
-    public void deleteCategory(Long id){
+    public void deleteCategory(int id){
         String sql = "DELETE FROM category WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 
-    public void updateCategory(Long id, Category category){
+    public void updateCategory(int id, Category category){
         String sql = "UPDATE category SET name = ? WHERE id = ?";
         jdbcTemplate.update(sql, category.getName(), id);
     }
@@ -43,5 +43,27 @@ public class CategoryDAO {
         String sql = "INSERT INTO category (name) VALUES (?);";
         jdbcTemplate.update(sql, c.getName());
     }
+
+    public List<Category> pagination(String range){
+
+        String[] pagination = range.split("-");
+
+        int limit = Integer.parseInt(pagination[1]);
+        int offset = Integer.parseInt(pagination[0]);
+
+        String sql = "SELECT * FROM category LIMIT ? OFFSET ?";
+        System.out.println(sql);
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Category.class), limit, offset -1);
+
+    }
+
+    public List<Category> searching(String name){
+        String sql = "SELECT * FROM category WHERE name=?";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Category.class), name);
+
+
+    }
+
+
 }
 

@@ -1,6 +1,7 @@
 package com.coding.javaapi.javaapi;
 
 import com.coding.javaapi.javaapi.dao.ProductsDAO;
+import com.coding.javaapi.javaapi.models.Category;
 import com.coding.javaapi.javaapi.models.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -96,6 +97,16 @@ public class ProductsController {
     public HttpStatus createProduct(@RequestBody Products products){
         productsService.add(products);
         return HttpStatus.CREATED;
+    }
+
+    @GetMapping("/products/orders")
+    public List<Products> pagination(@RequestParam(value = "range") String range){
+        return productsService.paginationProduct(range);
+    }
+
+    @GetMapping("/products/search")
+    public List<Products> searching(@RequestParam(value = "name") String name){
+        return productsService.searching(name);
     }
 
 }
