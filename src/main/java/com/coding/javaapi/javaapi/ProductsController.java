@@ -23,9 +23,6 @@ public class ProductsController {
      *
      * @param asc
      * @param desc
-     * @param name
-     * @param rating
-     * @param type
      * @return Full list of products || Filter list
      */
     @GetMapping("/products")
