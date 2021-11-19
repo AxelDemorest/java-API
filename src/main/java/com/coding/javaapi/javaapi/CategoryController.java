@@ -46,4 +46,9 @@ public class CategoryController {
     public List<Category> pagination(@RequestParam(value = "range") String range){
         return categoryService.pagination(range);
     }
+
+    @GetMapping("/category/search")
+    public List<Category> searching(@RequestParam(value = "name") String name){
+        return categoryService.searching(name);
+    }
 }

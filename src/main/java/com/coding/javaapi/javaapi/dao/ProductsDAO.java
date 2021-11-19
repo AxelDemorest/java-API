@@ -1,5 +1,6 @@
 package com.coding.javaapi.javaapi.dao;
 
+import com.coding.javaapi.javaapi.models.Category;
 import com.coding.javaapi.javaapi.models.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -86,5 +87,23 @@ public class ProductsDAO {
 
 
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class));
+    }
+
+    public List<Products> paginationProduct(String range){
+
+        String[] pagination = range.split("-");
+
+        int limit = Integer.parseInt(pagination[1]);
+        int offset = Integer.parseInt(pagination[0]);
+
+        String sql = "SELECT * FROM products LIMIT ? OFFSET ?";
+        System.out.println(sql);
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class), limit, offset -1);
+
+    }
+
+    public List<Products> searching(String name){
+        String sql = "SELECT * FROM products WHERE name=?";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Products.class), name);
     }
 }

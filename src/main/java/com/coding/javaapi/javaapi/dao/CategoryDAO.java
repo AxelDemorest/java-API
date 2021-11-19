@@ -57,6 +57,13 @@ public class CategoryDAO {
 
     }
 
+    public List<Category> searching(String name){
+        String sql = "SELECT * FROM category WHERE name=?";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Category.class), name);
+
+
+    }
+
 
 }
 

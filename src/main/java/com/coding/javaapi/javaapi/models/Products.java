@@ -3,18 +3,18 @@ package com.coding.javaapi.javaapi.models;
 import java.util.Date;
 
 public class Products {
-    private Long id;
+    private int id;
     private String type;
     private int rating;
     private String name;
     private Date createdAt;
     private int categoryId;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
