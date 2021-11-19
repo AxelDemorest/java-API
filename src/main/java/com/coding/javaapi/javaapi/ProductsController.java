@@ -31,15 +31,10 @@ public class ProductsController {
     @GetMapping("/products")
     public @ResponseBody List<Products> index(
             @RequestParam(value = "asc", required=false) String asc,
-            @RequestParam(value = "desc", required=false) String desc,
-            @RequestParam(value = "name", required=false) String name,
-            @RequestParam(value = "rating", required=false) String rating,
-            @RequestParam(value = "type", required=false) String type
+            @RequestParam(value = "desc", required=false) String desc
     ){
         if(asc == null && desc == null) {
             return productsService.listAll();
-        } else if(name == null && rating == null && type == null) {
-            return productsService.filterMultipleValues(name, rating, type);
         } else {
             return productsService.sortProducts(asc, desc);
         }

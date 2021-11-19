@@ -79,42 +79,6 @@ public class ProductsDAO {
 
     /**
      *
-     * Non fonctionnelle
-     * @param products
-     */
-    public List<Products> filterMultipleValues(String name, String rating, String type) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM products WHERE ");
-        List<Object> myList = new ArrayList<Object>();
-
-        if(name != null) {
-            String[] nameArray = name.split(",");
-            for (String s : nameArray) {
-                sql.append("name = ? AND ");
-                myList.add(s);
-            }
-        }
-
-        if(rating != null) {
-            String[] nameArray = name.split(",");
-            for (Integer integer : nameArray) {
-                sql.append("rating = ? AND ");
-                myList.add(integer);
-            }
-        }
-
-        if(type != null) {
-            String[] nameArray = nameArray.split(",");
-            for (String s : type) {
-                sql.append("type = ? AND ");
-                myList.add(s);
-            }
-        }
-
-        return jdbcTemplate.query(sql.toString(), BeanPropertyRowMapper.newInstance(Products.class), myList);
-    }
-
-    /**
-     *
      * @param asc
      * @param desc
      * @return
